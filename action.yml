@@ -1,0 +1,12 @@
+name: 'Deploy Docker to Kubernetes cluster'
+description: 'Build given Dockerfile, publish it to GitHub Container Registry and and deploy given deployment file to Kubernetes'
+author: 'Feavy'
+runs:
+    using: composite
+    steps:
+      - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+        shell: bash
+      - run: chmod +x ${{ github.action_path }}/main.sh
+        shell: bash
+      - run: main.sh
+        shell: bash
