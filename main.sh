@@ -16,7 +16,8 @@ mkdir $HOME/.kube && echo "${KUBE_CONFIG}" > ~/.kube/config
 if [[ ! -z ${DOCKERFILE_PATH} ]]; then
   # Build docker image
   export DOCKER_IMAGE=ghcr.io/${GITHUB_USERNAME}/${DOCKER_IMAGE}
-  docker build ${DOCKERFILE_PATH} -t ${DOCKER_IMAGE}
+  cd ${DOCKERFILE_PATH}
+  docker build . -t ${DOCKER_IMAGE}
 
   #Publish image to GitHub Container Registry
   echo ${GITHUB_TOKEN} | docker login ghcr.io --username ${GITHUB_USERNAME} --password-stdin
