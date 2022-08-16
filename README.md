@@ -33,6 +33,7 @@ jobs:
           DOCKERFILE_PATH: .
           DOCKER_IMAGE: feavy-nginx:latest
           DEPLOYMENT: deployment.yml
+          PLATFORM: arm64 # amd64 by default
 
       # Manually restart deployment if needed:
       - name: Restart deployment
