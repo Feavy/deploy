@@ -27,6 +27,11 @@ if [[ ! -z ${DOCKERFILE_PATH} ]]; then
   docker push ${DOCKER_IMAGE}
 fi
 
+vars=$(compgen -e)
+for var in $vars ; do
+  export ${var}_BASE64=$(echo ${!var} | base64)
+done
+
 if [[ ! -z ${DEPLOYMENT} ]]; then
   awkenvsubst < ${DEPLOYMENT} > generated-deployment.yml
   kubectl apply -f generated-deployment.yml
