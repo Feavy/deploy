@@ -1,12 +1,9 @@
-name: 'Deploy Docker to Kubernetes cluster'
-description: 'Build given Dockerfile, publish it to GitHub Container Registry and and deploy given deployment file to Kubernetes'
+name: 'Rollout restart deployment'
+description: 'Rollout restart deployment'
 author: 'Feavy'
 runs:
     using: composite
     steps:
-      - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-        shell: bash
-      - run: chmod +x ${{ github.action_path }}/main.sh
-        shell: bash
-      - run: main.sh
+      - run: |
+          curl -X POST "https://controller.feavy.fr/restart" -H "Authorization: Bearer $BEARER_TOKEN" -v -H "Content-type: application/json" --data '{"namespace":"'$NAMESPACE'","deployment":"'$DEPLOYMENT'"}'
         shell: bash
