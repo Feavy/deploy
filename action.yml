@@ -5,7 +5,7 @@ runs:
     using: composite
     steps:
       - run: |
-          if [[ -n "$FILE_PATH" ] || [ -n "$YAML_PATH ] || [ -n "$TAG" ]] ; then
+          if [[ -n "$FILE_PATH" || -n "$YAML_PATH" || -n "$TAG" ]] ; then
             BODY='{"namespace":"'$NAMESPACE'","deployment":"'$DEPLOYMENT'","filePath":"'$FILE_PATH'","yamlPath":"'$YAML_PATH'","tag":"'$TAG'"}'
           else
             BODY='{"namespace":"'$NAMESPACE'","deployment":"'$DEPLOYMENT'"}'
