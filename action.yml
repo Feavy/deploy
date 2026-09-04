@@ -5,5 +5,10 @@ runs:
     using: composite
     steps:
       - run: |
-          curl -X POST "https://controller.feavy.fr/restart" -H "Authorization: Bearer $BEARER_TOKEN" -v -H "Content-type: application/json" --data '{"namespace":"'$NAMESPACE'","deployment":"'$DEPLOYMENT'"}'
+          if [[ -n "$FILE_PATH" ] || [ -n "$YAML_PATH ] || [ -n "$TAG" ]] ; then
+            BODY='{"namespace":"'$NAMESPACE'","deployment":"'$DEPLOYMENT'","filePath":"'$FILE_PATH'","yamlPath":"'$YAML_PATH'","tag":"'$TAG'"}'
+          else
+            BODY='{"namespace":"'$NAMESPACE'","deployment":"'$DEPLOYMENT'"}'
+          fi
+          curl -X POST "https://controller.feavy.fr/deploy" -H "Authorization: Bearer $BEARER_TOKEN" -v -H "Content-type: application/json" --data "$BODY"
         shell: bash
